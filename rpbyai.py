@@ -2,6 +2,7 @@ import streamlit as st
 import random
 import time
 from mistralai import Mistral
+from google_engine import process_prompt
 
 model = "mistral-small-latest"
 
@@ -83,13 +84,14 @@ def generate_story(problematic, solutions, dice_rolls, player_stats):
         story_prompt += f"{player}: {solution} (Dice Roll: {dice_roll}) -> HP: {stats['HP']}, MP: {stats['MP']}, Gold: {stats['Gold']}\n"
 
     try:
+        proc_prompt = process_prompt(st.session_state.problematic)
         with st.spinner("Loading/Saving..."):
             time.sleep(1)
             response = client.chat.complete(
                 model=model,
                 messages=[
                     {"role": "system", "content": "You are a storytelling game master that provides cohesive story summaries under 150 words."},
-                    {"role": "user", "content": story_prompt},
+                    {"role": "user", "content": story_prompt + "\n" + proc_prompt},
                 ]
             )
         return response.choices[0].message.content
