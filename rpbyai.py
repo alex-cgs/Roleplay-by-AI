@@ -90,7 +90,7 @@ def generate_story(problematic, solutions, dice_rolls, player_stats):
             response = client.chat.complete(
                 model=model,
                 messages=[
-                    {"role": "system", "content": "You are a storytelling game master that provides cohesive story summaries under 150 words."},
+                    {"role": "system", "content": "You are a storytelling game master (DnD like) that provides cohesive story summaries under 150 words based on each character's prompt and their d20 rolls."},
                     {"role": "user", "content": story_prompt + "\n" + proc_prompt},
                 ]
             )
