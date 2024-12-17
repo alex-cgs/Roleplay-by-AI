@@ -119,6 +119,7 @@ if len(st.session_state.players) >= 2:
     else:
         st.write(f"### Problematic: {st.session_state.problematic}")
 
+        # Collect all solutions first
         if not st.session_state.story_generated:
             solutions_ready = True
             for player in st.session_state.players:
@@ -133,7 +134,6 @@ if len(st.session_state.players) >= 2:
                 st.session_state.next_round_triggered = False
 
         if st.session_state.story_generated:
-            # Generate dice rolls and update stats
             if not st.session_state.next_round_triggered:
                 for player in st.session_state.players:
                     dice_roll = roll_dice()
